@@ -19,19 +19,19 @@ Forwarded: <no|not-needed|url proving that it has been forwarded>
 Reviewed-By: <name and email of someone who approved the patch>
 Last-Update: 2023-03-23
 
---- debian-patch-best-practice-1.0.0.orig/README.md
-+++ debian-patch-best-practice-1.0.0/README.md
-@@ -1,9 +1,65 @@
+--- a/README.md
++++ b/README.md
+@@ -1,9 +1,98 @@
  # DEBIAN-PATCH-BEST-PRACTICE
  
 -About the branches in this repository:
 +Fundamental ways to create a quilt patch.
  
 -- `main`: the upstream project.
-+1. When you do not have a patch file: you edit files inline on your own.
++## When you do not have a patch file: you edit files inline on your own.
  
 -- `patch-native`: debian/source/format: 3.0 (native)
-+Solution 1:
++### Solution 1:
  
 -- `patch-quilt`: debian/source/format: 3.0 (quilt)
 +```bash
@@ -47,7 +47,7 @@ Last-Update: 2023-03-23
 +quilt header -e
 +```
 +
-+Solution 2:
++### Solution 2:
 +
 +```bash
 +# edit the files in your text editor
@@ -60,9 +60,9 @@ Last-Update: 2023-03-23
 +
 +```
 +
-+2. When you have a patch file.
++## When you have a patch file.
 +
-+Solution 1:
++### Solution 1:
 +
 +```bash
 +patch {patch}
@@ -74,7 +74,7 @@ Last-Update: 2023-03-23
 +quilt refresh
 +```
 +
-+Solution 2:
++### Solution 2:
 +
 +```bash
 +cp {patch} debian/patches
@@ -90,4 +90,37 @@ Last-Update: 2023-03-23
 +
 +# optional: edit the patch header
 +quilt header -e
++```
++
++## Edit existing patch.
++
++```bash
++quilt pop -a
++quilt push {patch}
++
++# edit files in your text editor
++# run these two if needed
++quilt add {file}
++quilt edit {file}
++
++# then update the quilt patch
++quilt refresh
++
++# optional: edit the patch header
++quilt header -e
++```
++
++## Generate a debdiff for SRU.
++
++```bash
++# Create a patch or edit an existing one
++
++# Increase the changelog version
++dch -i
++
++# Build the debian source package
++debuild -S
++
++# Generate the debdiff
++debdiff > {cool-name}.debdiff
 +```

@@ -2,9 +2,9 @@
 
 Fundamental ways to create a quilt patch.
 
-1. When you do not have a patch file: you edit files inline on your own.
+## When you do not have a patch file: you edit files inline on your own.
 
-Solution 1:
+### Solution 1:
 
 ```bash
 quilt new {patch}
@@ -19,7 +19,7 @@ quilt refresh
 quilt header -e
 ```
 
-Solution 2:
+### Solution 2:
 
 ```bash
 # edit the files in your text editor
@@ -32,9 +32,9 @@ quilt refresh
 
 ```
 
-2. When you have a patch file.
+## When you have a patch file.
 
-Solution 1:
+### Solution 1:
 
 ```bash
 patch {patch}
@@ -46,7 +46,7 @@ dpkg-source --commit
 quilt refresh
 ```
 
-Solution 2:
+### Solution 2:
 
 ```bash
 cp {patch} debian/patches
@@ -62,4 +62,37 @@ quilt refresh
 
 # optional: edit the patch header
 quilt header -e
+```
+
+## Edit existing patch.
+
+```bash
+quilt pop -a
+quilt push {patch}
+
+# edit files in your text editor
+# run these two if needed
+quilt add {file}
+quilt edit {file}
+
+# then update the quilt patch
+quilt refresh
+
+# optional: edit the patch header
+quilt header -e
+```
+
+## Generate a debdiff for SRU.
+
+```bash
+# Create a patch or edit an existing one
+
+# Increase the changelog version
+dch -i
+
+# Build the debian source package
+debuild -S
+
+# Generate the debdiff
+debdiff > {cool-name}.debdiff
 ```
