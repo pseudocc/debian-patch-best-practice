@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+override_dh_auto_install:
+	${MAKE} install
+
+override_dh_auto_clean:
+	${MAKE} clean
+
+%:
+	dh $@

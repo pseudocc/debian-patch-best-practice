@@ -1,0 +1,93 @@
+Description: update README.md
+ not-needed.
+ .
+ debian-patch-best-practice (1.0.0) jammy; urgency=medium
+ .
+   * Initial release.
+Author: Atlas Yu <atlas.yu@canonical.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: 2023-03-23
+
+--- debian-patch-best-practice-1.0.0.orig/README.md
++++ debian-patch-best-practice-1.0.0/README.md
+@@ -1,9 +1,65 @@
+ # DEBIAN-PATCH-BEST-PRACTICE
+ 
+-About the branches in this repository:
++Fundamental ways to create a quilt patch.
+ 
+-- `main`: the upstream project.
++1. When you do not have a patch file: you edit files inline on your own.
+ 
+-- `patch-native`: debian/source/format: 3.0 (native)
++Solution 1:
+ 
+-- `patch-quilt`: debian/source/format: 3.0 (quilt)
++```bash
++quilt new {patch}
++quilt add {file}
++quilt edit {file}
++
++# edit the files in your text editor
++# then update the quilt patch
++quilt refresh
++
++# optional: edit the patch header
++quilt header -e
++```
++
++Solution 2:
++
++```bash
++# edit the files in your text editor
++
++# create a patch and complete the patch header
++dpkg-source --commit
++
++# then update the quilt patch
++quilt refresh
++
++```
++
++2. When you have a patch file.
++
++Solution 1:
++
++```bash
++patch {patch}
++
++# create a patch and complete the patch header
++dpkg-source --commit
++
++# then update the quilt patch
++quilt refresh
++```
++
++Solution 2:
++
++```bash
++cp {patch} debian/patches
++
++# append your patch name to the end of the file
++vi debian/patches/series
++
++# apply all patches
++quilt push -a
++
++# then update the quilt patch
++quilt refresh
++
++# optional: edit the patch header
++quilt header -e
++```

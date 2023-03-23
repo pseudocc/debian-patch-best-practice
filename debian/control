@@ -1,0 +1,18 @@
+Source: debian-patch-best-practice
+Section: rust
+Priority: optional
+Maintainer: Atlas Yu <atlas.yu@canonical.com>
+Build-Depends:
+ debhelper-compat (=12),
+# cargo, -- My cargo is actually installed via rustup
+Standards-Version: 4.6.0
+Homepage: https://github.com/pseudocc/debian-patch-best-practice
+Vcs-Git: https://github.com/pseudocc/debian-patch-best-practice.git
+Vcs-Browser: https://github.com/pseudocc/debian-patch-best-practice
+
+Package: dpbp-add
+Architecture: any
+Priority: optional
+Depends:
+ ${misc:Depends},
+Description: Rust library: debian_patch_best_practice::add.
