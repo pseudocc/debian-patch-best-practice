@@ -1,3 +1,10 @@
+debian-patch-best-practice (1.0.0-overflow) jammy; urgency=medium
+
+  * d/p/upstream-patch-overflow:
+    - https://github.com/pseudocc/debian-patch-best-practice/commit/e65c9295cbc5c8b78ddea97813fd3fea36593910
+
+ -- Atlas Yu <atlas.yu@canonical.com>  Thu, 23 Mar 2023 23:09:17 +0800
+
 debian-patch-best-practice (1.0.0) jammy; urgency=medium
 
   * Initial release.

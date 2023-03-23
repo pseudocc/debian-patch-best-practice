@@ -1,0 +1,39 @@
+Description: upstream patch: overflowing add
+ .
+ debian-patch-best-practice (1.0.0) jammy; urgency=medium
+ .
+   * Initial release.
+Author: Atlas Yu <atlas.yu@canonical.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: 2023-03-23
+
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1,3 +1,3 @@
+ pub fn add(left: u32, right: u32) -> u32 {
+-    left + right
++    left.wrapping_add(right)
+ }
+--- a/tests/main.rs
++++ b/tests/main.rs
+@@ -6,6 +6,9 @@
+     fn it_works() {
+         let result = add(2, 2);
+         assert_eq!(result, 4);
++
++        let result = add(u32::MAX, 2);
++        assert_eq!(result, 1);
+     }
+ }
+ 
